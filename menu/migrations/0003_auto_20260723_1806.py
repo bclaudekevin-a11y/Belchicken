@@ -13,7 +13,7 @@ def create_superuser(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('menu', '0002_produit_est_vedette_produit_prix_pr...'), # Garde bien la dépendance vers ta migration précédente qui est affichée dans ton fichier
+        ('menu', '0002_produit_est_vedette_produit_prix_promo'), # Garde bien la dépendance vers ta migration précédente qui est affichée dans ton fichier
     ]
 
     operations = [
