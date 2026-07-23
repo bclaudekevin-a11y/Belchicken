@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {# Adapte le nom si ton fichier de base s'appelle autrement #}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 text-center">🛒 Validation de votre Commande</h2>
+
+    <div class="row">
+        <!-- Formulaire de commande -->
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-sm p-4">
+                <form method="POST" action="{% url 'commande:commande' %}">
+                    {% csrf_token %}
+
+                    <h4 class="mb-3">Informations Personnelles</h4>
+                    <div class="mb-3">
+                        <label for="client_nom" class="form-label">Nom complet *</label>
+                        <input type="text" name="client_nom" id="client_nom" class="form-control" placeholder="Ex: Jean Dupont" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="client_telephone" class="form-label">Numéro de téléphone *</label>
+                        <input type="tel" name="client_telephone" id="client_telephone" class="form-control" placeholder="Ex: +226 70 00 00 00" required>
+                    </div>
+
+                    <h4 class="mb-3 mt-4">Mode de Consommation</h4>
+                    <div class="mb-3">
+                        <label for="mode_consommation" class="form-label">Comment souhaitez-vous déguster ? *</label>
+                        <select name="mode_consommation" id="mode_consommation" class="form-select" onchange="toggleAdresse(this.value)">
+                            <option value="sur_place">Sur place</option>
+                            <option value="a_emporter">À emporter</option>
+                            <option value="livraison">Livraison à domicile</option>
+                        </select>
+                    </div>
+
+                    <!-- Champ adresse (masqué par défaut) -->
+                    <div class="mb-3" id="champ_adresse" style="display: none;">
+                        <label for="adresse_livraison" class="form-label">Adresse de livraison *</label>
+                        <textarea name="adresse_livraison" id="adresse_livraison" class="form-control" rows="2" placeholder="Quartier, rue, numéro de maison..."></textarea>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                         Valider et Confirmer la Commande
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleAdresse(mode) {
+        const champAdresse = document.getElementById('champ_adresse');
+        const inputAdresse = document.getElementById('adresse_livraison');
+        
+        if (mode === 'livraison') {
+            champAdresse.style.display = 'block';
+            inputAdresse.setAttribute('required', 'required');
+        } else {
+            champAdresse.style.display = 'none';
+            inputAdresse.removeAttribute('required');
+        }
+    }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modeConsommation = document.querySelector('[name="mode_consommation"]');
+    const inputAdresse = document.querySelector('[name="adresse_livraison"]');
+    
+    // On trouve le paragraphe ou div qui contient l'adresse
+    const champAdresse = inputAdresse ? inputAdresse.closest('p, div, .mb-3') : null;
+
+    function basculerAdresse() {
+        if (!modeConsommation || !inputAdresse || !champAdresse) return;
+
+        // On vérifie si c'est 'LIVRAISON' ou 'livraison'
+        const val = modeConsommation.value.toUpperCase();
+
+        if (val === 'LIVRAISON') {
+            champAdresse.style.display = 'block';
+            inputAdresse.setAttribute('required', 'required');
+        } else {
+            champAdresse.style.display = 'none';
+            inputAdresse.removeAttribute('required');
+            inputAdresse.value = '';
+        }
+    }
+
+    if (modeConsommation) {
+        modeConsommation.addEventListener('change', basculerAdresse);
+        basculerAdresse(); // Exécution immédiate au chargement
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="categorie-header">
+    <h1>{{ categorie.nom }}</h1>
+</div>
+
+<div class="produits-grid">
+    {% for produit in produits %}
+        <div class="produit-card">
+            {% if produit.image %}
+                <img src="{{ produit.image.url }}" alt="{{ produit.nom }}">
+            {% endif %}
+            <h3>{{ produit.nom }}</h3>
+            {% if produit.prix_promo %}
+                <p class="prix-barre">{{ produit.prix }} FCFA</p>
+                <p class="prix-promo">{{ produit.prix_promo }} FCFA</p>
+                <span class="badge-promo">-{{ produit.pourcentage_reduction }}%</span>
+            {% else %}
+                <p class="prix">{{ produit.prix }} FCFA</p>
+            {% endif %}
+            
+            <!-- BOUTON COMMANDER DIRECT -->
+            <form method="POST" action="{% url 'menu:ajouter_au_panier' produit.id %}" class="mt-2">
+                {% csrf_token %}
+                <input type="hidden" name="quantite" value="1">
+                <button type="submit" class="btn-commander">
+                    Commander
+                </button>
+            </form>
+        </div>
+    {% empty %}
+        <p>Aucun produit disponible dans cette catégorie pour le moment.</p>
+    {% endfor %}
+</div>
+        </div>
+    
+{% endblock %}

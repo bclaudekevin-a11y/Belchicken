@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5 text-center" style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div class="card shadow-sm p-4" style="border: 1px solid #ddd; border-radius: 12px; background: #fff;">
+        
+        <div style="color: #28a745; margin-bottom: 15px;">
+            <h1 style="margin-top: 10px;">✅ Commande Reçue !</h1>
+        </div>
+
+        <p class="lead" style="font-size: 1.2rem;">
+            Merci <strong>{{ commande.client_nom }}</strong> pour votre commande chez Belchicken.
+        </p>
+
+        <div style="background-color: #e9ecef; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin: 0;"><strong>Numéro de commande :</strong> #{{ commande.id }}</p>
+            <p style="margin: 5px 0 0 0;"><strong>Statut :</strong> {{ commande.get_statut_display }}</p>
+            <p style="margin: 5px 0 0 0;"><strong>Mode :</strong> {{ commande.get_mode_consommation_display }}</p>
+            {% if commande.adresse_livraison %}
+                <p style="margin: 5px 0 0 0;"><strong>Adresse :</strong> {{ commande.adresse_livraison }}</p>
+            {% endif %}
+        </div>
+
+        <div style="text-align: left; margin: 20px 0;">
+            <h3 style="border-bottom: 2px solid #eee; padding-bottom: 8px;">Détails des articles :</h3>
+            
+            <ul style="list-style: none; padding: 0;">
+                {% for ligne in commande.lignes.all %}
+                    <li style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f1f1;">
+                        <span>{{ ligne.quantite }}x {{ ligne.produit.nom }}</span>
+                        <strong>{{ ligne.sous_total }} FCFA</strong>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: bold; margin-top: 15px; color: #d9534f;">
+                <span>Total :</span>
+                <span>{{ commande.total }} FCFA</span>
+            </div>
+        </div>
+
+        <a href="{% url 'menu:accueil' %}" style="display: inline-block; background-color: #950f06; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 15px;">
+            🏠 Retourner à l'accueil
+        </a>
+    </div>
+</div>
+{% endblock %}

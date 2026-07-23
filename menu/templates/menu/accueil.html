@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="accueil-hero">
+    <img class="hero-banner" src="{% static 'menu/image/accueil.jpg' %}" alt="">
+    <h1>Bienvenue chez Belchicken</h1>
+    <p>Découvrez nos produits vedettes</p>
+</div>
+
+<div class="produits-grid">
+    {% for produit in produits_vedettes %}
+        <div class="produit-card">
+            {% if produit.image %}
+                <img src="{{ produit.image.url }}" alt="{{ produit.nom }}">
+            {% endif %}
+            <h3>{{ produit.nom }}</h3>
+            {% if produit.prix_promo %}
+                <p class="prix-barre">{{ produit.prix }} FCFA</p>
+                <p class="prix-promo">{{ produit.prix_promo }} FCFA</p>
+                <span class="badge-promo">-{{ produit.pourcentage_reduction }}%</span>
+            {% else %}
+                <p class="prix">{{ produit.prix }} FCFA</p>
+                
+            {% endif %}
+    
+            <!-- BOUTON COMMANDER DIRECT -->
+            <form method="POST" action="{% url 'menu:ajouter_au_panier' produit.id %}" class="mt-2">
+                {% csrf_token %}
+                <input type="hidden" name="quantite" value="1">
+                <button type="submit" class="btn-commander">
+                     Commander
+                </button>
+            </form>
+        </div>
+    {% empty %}
+        <p>Aucun produit vedette pour le moment.</p>
+    {% endfor %}
+</div>
+        </div>
+   
+</div>
+{% endblock %}
