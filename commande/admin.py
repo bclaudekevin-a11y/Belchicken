@@ -31,23 +31,26 @@ class CommandeAdmin(admin.ModelAdmin):
     def afficher_total(self, obj):
         return f"{obj.total()} FCFA"
     def envoyer_whatsapp(self, obj):
-        # On nettoie le numéro pour WhatsApp
-        # Ton numéro en texte (avec guillemets)
-        mon_numero = "07276613"
-        num = f"226{mon_numero[0:]}" if mon_numero.startswith("0") else f"226{mon_numero}"
+        # On récupère le numéro du client depuis l'objet commande
+        # (Adaptez 'client_telephone' selon le nom exact de votre champ dans le modèle)
+        telephone_client = getattr(obj, 'client_telephone', '') 
+        
+        # Nettoyage et formatage du numéro du client
+        num = f"226{telephone_client[1:]}" if telephone_client.startswith("0") else f"226{telephone_client}"
+        
         # Message selon le statut
         if obj.statut == 'livraison':
-            msg = f"Bonjour {obj.client_nom} ! Votre commande Belchicken #{obj.id} est en cours de livraison !,notre livreur vous contactera"
+            msg = f"Bonjour {obj.client_nom} ! Votre commande Belchicken #{obj.id} est en cours de livraison."
         elif obj.statut == 'terminee':
             msg = f"Bonjour {obj.client_nom} ! Votre commande Belchicken #{obj.id} est prête !"
         else:
-            msg = f"Bonjour {obj.client_nom} ! Nous avons bien reçu votre commande Belchicken #{obj.id}."
+            msg = f"Bonjour {obj.client_nom} ! Nous avons bien reçu votre commande Belchicken #{obj.id}"
 
         msg_encode = urllib.parse.quote(msg)
         url = f"https://wa.me/{num}?text={msg_encode}"
 
         return format_html(
-            '<a href="{}" target="_blank" style="color: #417690; font-weight: bold; text-decoration: underline;">Envoyer WhatsApp</a>', 
+            '<a href="{}" target="_blank" style="color: #417690; font-weight: bold; text-decoration: underline;">Envoyer WhatsApp</a>',
             url
         )
 
