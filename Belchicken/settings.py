@@ -134,7 +134,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'jptkajez',
     'API_KEY': '237675881938453',
-    'API_SECRET': 'DLm__ SUbrQi5ZYVZQqVkPGX85pE'
+    'API_SECRET': 'DLm__SUbrQi5ZYVZQqVkPGX85pE'
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
