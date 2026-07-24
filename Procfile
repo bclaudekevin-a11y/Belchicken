@@ -1,0 +1,1 @@
+web: gunicorn Belchicken.wsgi --log-file -
