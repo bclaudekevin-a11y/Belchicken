@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 class Categorie(models.Model):
     nom=models.CharField(max_length=200)
@@ -8,7 +9,7 @@ class Categorie(models.Model):
 class Produit(models.Model):
     nom=models.CharField(max_length=200)
     prix=models.PositiveIntegerField(default=0)
-    image=models.ImageField(upload_to='produits',blank=True,null=True)
+    image = CloudinaryField('image')
     categorie=models.ForeignKey(Categorie,on_delete=models.CASCADE, related_name='produits')
     est_vedette = models.BooleanField(default=False, verbose_name="Produit vedette")
     prix_promo = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, verbose_name="Prix promotionnel")
