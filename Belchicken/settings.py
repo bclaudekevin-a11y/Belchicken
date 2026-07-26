@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-78&ceww)+zn^4l+)6zpv^=ga!rx@^9fnw_r#%%zlusaw9!bjue
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['zealous-rebirth-production-a64d.up.railway.app']
+ALLOWED_HOSTS = ['belchicken-burkina.up.railway.app']
 
 
 # Application definition
