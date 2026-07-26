@@ -288,7 +288,7 @@
             <a href="{% url 'menu:accueil' %}" class="logo">Belchicken</a>
         </div>
 
-        <form class="search-bar" method="get" action="">
+        <form class="search-bar" method="get" action="{% url 'menu:recherche' %}">
             <input type="text" name="q" placeholder="Rechercher un produit...">
             <button type="submit">🔍</button>
         </form>
@@ -311,6 +311,30 @@
     </main>
 
     <footer class="footer">
+        <div style="font-size: 13px; line-height: 1.8; color: #000000; margin-bottom: 20px;">
+            <p style="margin: 0; padding: 0 10px;">
+                <span style="display: inline-block; white-space: nowrap;">📞 <a href="tel:+22605234848" style="text-decoration: none; color: #b31010; font-weight: bold;">+226 78 21 88 05</a></span> / 
+                <span style="display: inline-block; white-space: nowrap;"><a href="tel:+22650627070" style="text-decoration: none; color: #b31010; font-weight: bold;">+226 76 58 22 31</a></span> / 
+                <br>
+                <span style="display: inline-block; margin-top: 6px; color: #666;">📍 Ouagadougou, Burkina Faso</span>
+            </p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding-bottom: 20px;">
+            <a href="https://wa.me/22605234848" style="color: #000000; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap;">
+                <img src="{% static 'boutique/icons/whatsapp-logo.png' %}" alt="Whatsapp" style="width: 22px; height: 22px; object-fit: contain;"> WhatsApp
+            </a>
+            <a href="https://www.facebook.com/share/1D9FnPmuoB/?mibextid=wwXIfr" style="color: #000000; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap;">
+                <img src="{% static 'boutique/icons/facebook.png' %}" alt="facebook" style="width: 22px; height: 22px; object-fit: contain;"> Facebook
+            </a>
+            <a href="https://www.tiktok.com/@belchickenburkina?_r=1&_t=ZS-98MRD9yOaOG" style="color: #030303; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap;">
+                <img src="{% static 'boutique/icons/tik-tok.png' %}" alt="tiktok" style="width: 22px; height: 22px; object-fit: contain;"> Tik-tok
+            </a>
+            <a href="https://www.instagram.com/belchicken_burkina?igsh=MTQ3cnpyd2RkMHRyaw==" style="color: #000000; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 12px; white-space: nowrap;">
+                <img src="{% static 'boutique/icons/instagram-logo.png' %}" alt="instagram" style="width: 22px; height: 22px; object-fit: contain;"> instagram
+            </a>
+        </div>
+
         <p>&copy; {% now "Y" %} Belchicken. Tous droits réservés.</p>
         <p>Contactez-nous sur WhatsApp</p>
     </footer>

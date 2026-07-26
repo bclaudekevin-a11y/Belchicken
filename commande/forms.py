@@ -12,7 +12,7 @@ class CommandeForm(forms.ModelForm):
             }),
             'client_telephone': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Votre numéro de téléphone'
+                'placeholder': 'Votre numéro de téléphone whatsapp'
             }),
             'mode_consommation': forms.Select(attrs={
                 'class': 'form-select',

@@ -38,3 +38,16 @@ def ajouter_au_panier(request, produit_id):
     
     # Fallback si JS est désactivé
     return redirect('menu:accueil')
+
+def recherche_produit(request):
+    query = request.GET.get('q', '')
+    if query:
+        # Recherche les produits dont le nom contient le mot-clé (insensible à la casse)
+        produits = Produit.objects.filter(nom__icontains=query)
+    else:
+        produits = Produit.objects.none()
+        
+    return render(request, 'menu/recherche.html', {
+        'produits': produits,
+        'query': query
+    })

@@ -31,17 +31,20 @@ class CommandeAdmin(admin.ModelAdmin):
     def afficher_total(self, obj):
         return f"{obj.total()} FCFA"
     def envoyer_whatsapp(self, obj):
-        # On récupère le numéro du client depuis l'objet commande
-        # (Adaptez 'client_telephone' selon le nom exact de votre champ dans le modèle)
-        telephone_client = getattr(obj, 'client_telephone', '') 
-        
+        # Récupération propre du numéro depuis l'objet Commande
+        telephone_client = str(getattr(obj, 'client_telephone', '')).strip()
+
         # Nettoyage et formatage du numéro du client
-        num = f"226{telephone_client[1:]}" if telephone_client.startswith("0") else f"226{telephone_client}"
-        
+        if telephone_client.startswith('0'):
+            num = f"226{telephone_client[1:]}"
+        elif telephone_client.startswith('226'):
+            num = telephone_client
+        else:
+            num = f"226{telephone_client}"
         # Message selon le statut
         if obj.statut == 'livraison':
             msg = f"Bonjour {obj.client_nom} ! Votre commande Belchicken #{obj.id} est en cours de livraison."
-        elif obj.statut == 'terminee':
+        elif obj.statut == 'terminée':
             msg = f"Bonjour {obj.client_nom} ! Votre commande Belchicken #{obj.id} est prête !"
         else:
             msg = f"Bonjour {obj.client_nom} ! Nous avons bien reçu votre commande Belchicken #{obj.id}"
