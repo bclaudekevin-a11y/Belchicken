@@ -1,23 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container my-5">
-    <div class="row">
-        <div class="col-md-6">
-            <!-- Image en grand -->
-            <img src="{{ produit.image.url }}" class="img-fluid rounded shadow" alt="{{ produit.nom }}">
-        </div>
-        <div class="col-md-6">
-            <h2>{{ produit.nom }}</h2>
-            <p class="text-muted h4">{{ produit.prix }} FCFA</p>
-            <p>{{ produit.description }}</p>
-            
-            <!-- Formulaire pour commander directement -->
-<form method="POST" action="{% url 'menu:ajouter_au_panier' produit.id %}" class="mt-3">
-    {% csrf_token %}
-    <input type="hidden" name="quantite" value="1">
-    <button type="submit" class="btn btn-success btn-lg">Commander ce produit</button>
-</form>        
-</div>
+    <div class="row justify-content-center">
+    <div class="col-md-4 text-center">
+        <!-- Image avec une taille contrôlée (max-width et hauteur max) -->
+        <img src="{{ produit.image.url }}" class="img-fluid rounded shadow" style="max-height: 350px; width: auto;" alt="{{ produit.nom }}">
+    </div>
+    <div class="col-md-6">
+        <!-- Ligne du nom supprimée d'ici pour éviter le doublon avec la canette -->
+        <p class="text-muted h4 mt-3">{{ produit.prix }} FCFA</p>
+        <p>{{ produit.description }}</p>
+
+        <!-- Formulaire de commande -->
+        <form method="POST" action="{% url 'menu:ajouter_au_panier' produit.id %}" class="mt-3">
+            {% csrf_token %}
+            <input type="hidden" name="quantite" value="1">
+            <button type="submit" class="btn btn-success btn-lg">Commander ce produit</button>
+        </form>
     </div>
 </div>
 {% endblock %}
