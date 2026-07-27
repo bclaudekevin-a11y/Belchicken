@@ -3,21 +3,23 @@
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-6 text-center">
-            <!-- Image bien centrée -->
-            <div class="mb-4">
-                <img src="{{ produit.image.url }}" class="img-fluid rounded shadow" style="max-height: 350px; width: auto;" alt="Produit">
+            
+            <!-- Image contrôlée et centrée -->
+            <div class="mx-auto mb-4" style="max-width: 350px;">
+                <img src="{{ produit.image.url }}" class="img-fluid rounded shadow w-100" alt="Produit">
             </div>
             
-            <!-- Prix et description centrés -->
-            <p class="text-muted h4 fw-bold">{{ produit.prix }} FCFA</p>
+            <!-- Prix grossi avec la classe fs-3 -->
+            <p class="text-dark fw-bold fs-3">{{ produit.prix }} FCFA</p>
             <p class="my-3 text-secondary">{{ produit.description }}</p>
 
-            <!-- Formulaire de commande centré -->
+            <!-- Formulaire avec un bouton plus gros et plus large -->
             <form method="POST" action="{% url 'menu:ajouter_au_panier' produit.id %}" class="mt-4">
                 {% csrf_token %}
                 <input type="hidden" name="quantite" value="1">
-                <button type="submit" class="btn btn-success btn-lg px-5">Commander ce produit</button>
+                <button type="submit" class="btn btn-success btn-lg px-5 py-3 fs-5 fw-bold">Commander ce produit</button>
             </form>
+            
         </div>
     </div>
 </div>
