@@ -28,7 +28,7 @@ class CommandeAdmin(admin.ModelAdmin):
 
     @admin.display(description='Produits commandés')
     def afficher_produits(self, obj):
-        items = obj.ligne_commande_set.all()
+        items = obj.lignes.all()
         details = [f"{item.quantite}x {item.produit.nom}" for item in items]
         return ", ".join(details)
 
@@ -52,7 +52,7 @@ class CommandeAdmin(admin.ModelAdmin):
             num = f"226{telephone_client}"
 
         # 2. Récupération de la liste des produits commandés pour le message
-        items = obj.ligne_commande_set.all()
+        items = obj.lignes.all()
         liste_articles = ", ".join([f"{item.quantite} {item.produit.nom}" for item in items])
 
         # 3. Message personnalisé avec le détail des produits et le montant total
