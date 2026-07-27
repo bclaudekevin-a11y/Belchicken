@@ -12,7 +12,7 @@
     {% for produit in produits_vedettes %}
         <div class="produit-card">
             {% if produit.image %}
-                <a href="{% url 'detail_produit' produit.id %}"><img src="{{ produit.image.url }}" alt="{{ produit.nom }}"><h3>{{ produit.nom }}</h3></a>
+                <a href="{% url 'menu:detail_produit' produit.id %}"><img src="{{ produit.image.url }}" alt="{{ produit.nom }}"><h3>{{ produit.nom }}</h3></a>
             {% endif %}
             <h3>{{ produit.nom }}</h3>
             {% if produit.prix_promo %}
