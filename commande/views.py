@@ -4,6 +4,10 @@ from .models import Commande, LigneCommande
 from menu.models import Produit
 from django.http import JsonResponse
 
+def detail_produit(request, produit_id):
+    produit = get_object_or_404(produit_id=produit_id) # ou id=produit_id selon ton modèle
+    return render(request, 'detail_produit.html', {'produit': produit})
+
 def creer_commande(request):
     panier = request.session.get('panier', {})
 

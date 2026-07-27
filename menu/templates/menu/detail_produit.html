@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Image en grand -->
+            <img src="{{ produit.image.url }}" class="img-fluid rounded shadow" alt="{{ produit.nom }}">
+        </div>
+        <div class="col-md-6">
+            <h2>{{ produit.nom }}</h2>
+            <p class="text-muted h4">{{ produit.prix }} FCFA</p>
+            <p>{{ produit.description }}</p>
+            
+            <!-- Formulaire pour commander directement -->
+            <a href="{% url 'commander' %}" class="btn btn-success btn-lg mt-3">Commander ce produit</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
