@@ -12,7 +12,7 @@
             <p>{{ produit.description }}</p>
             
             <!-- Formulaire pour commander directement -->
-<form method="POST" action="{% url 'ajouter_au_panier' produit.id %}" class="mt-3">
+<form method="POST" action="{% url 'menu:ajouter_au_panier' produit.id %}" class="mt-3">
     {% csrf_token %}
     <input type="hidden" name="quantite" value="1">
     <button type="submit" class="btn btn-success btn-lg">Commander ce produit</button>
