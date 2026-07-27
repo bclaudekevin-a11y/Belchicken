@@ -14,7 +14,7 @@
             {% if produit.image %}
                 <a href="{% url 'menu:detail_produit' produit.id %}"><img src="{{ produit.image.url }}" alt="{{ produit.nom }}"><h3>{{ produit.nom }}</h3></a>
             {% endif %}
-            <h3>{{ produit.nom }}</h3>
+           
             {% if produit.prix_promo %}
                 <p class="prix-barre">{{ produit.prix }} FCFA</p>
                 <p class="prix-promo">{{ produit.prix_promo }} FCFA</p>
