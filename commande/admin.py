@@ -38,30 +38,36 @@ class CommandeAdmin(admin.ModelAdmin):
 
     @admin.display(description='WhatsApp')
     def envoyer_whatsapp(self, obj):
-        # 1. Nettoyage du numéro (gère le 0 initial, le 226 et les numéros à 8 chiffres)
         raw_phone = str(getattr(obj, 'client_telephone', '')).strip()
         telephone_client = "".join(filter(str.isdigit, raw_phone))
 
+        # Si le numéro commence par 226
         if telephone_client.startswith('226'):
-            num = telephone_client
-        elif telephone_client.startswith('0') and len(telephone_client) > 1:
-            num = f"226{telephone_client[1:]}"
-        elif len(telephone_client) == 8:
-            num = f"226{telephone_client}"
+            # S'il manque un chiffre (parce que le 0 a sauté, ex: 226 + 7 chiffres = 10 caractères au total)
+            if len(telephone_client) == 10: 
+                # On réinsère le 0 juste après le 226 -> 226 + 0 + les 7 chiffres
+                num = f"2260{telephone_client[3:]}"
+            else:
+                num = telephone_client
+        # Si le numéro a été enregistré sans le 226 et fait 7 chiffres (ex: 7276613)
+        elif len(telephone_client) == 7:
+            num = f"2260{telephone_client}"
+        # Si le numéro commence par 0 et fait 8 chiffres (ex: 07276613)
+        elif telephone_client.startswith('0') and len(telephone_client) == 8:
+            num = f"226{telephone_client}" # Le 0 est gardé car l'API WhatsApp l'accepte souvent ou on peut le formater
         else:
             num = f"226{telephone_client}"
 
-        # 2. Récupération de la liste des produits commandés pour le message
+        # Récupération de la liste des produits pour le message
         items = obj.lignes.all()
         liste_articles = ", ".join([f"{item.quantite} {item.produit.nom}" for item in items])
 
-        # 3. Message personnalisé avec le détail des produits et le montant total
         if obj.statut == 'livraison':
             msg = f"Bonjour {obj.client_nom} ! Votre commande Belchicken #{obj.id} ({liste_articles}) d'un montant de {obj.total()} FCFA est en cours de livraison."
         elif obj.statut == 'terminée':
             msg = f"Bonjour {obj.client_nom} ! Votre commande Belchicken #{obj.id} ({liste_articles}) est prête !"
         else:
-            msg = f"Bonjour {obj.client_nom} ! Nous avons bien reçu votre commande Belchicken #{obj.id} contenant : {liste_articles}. Total : {obj.total()} FCFA."
+            msg = f"Bonjour {obj.client_nom} ! Nous avons bien reçu votre commande #{obj.id} contenant : {liste_articles}. Total : {obj.total()} FCFA."
 
         msg_encode = urllib.parse.quote(msg)
         url = f"https://wa.me/{num}?text={msg_encode}"
