@@ -12,6 +12,11 @@ def categorie_detail(request, categorie_id):
         'categorie': categorie,
         'produits': produits
     })
+
+def detail_produit(request, produit_id):
+    produit = get_object_or_404(produit_id=produit_id) # ou id=produit_id selon ton modèle
+    return render(request, 'detail_produit.html', {'produit': produit})
+
 def ajouter_au_panier(request, produit_id):
     produit = get_object_or_404(Produit, id=produit_id)
     panier = request.session.get('panier', {})
